@@ -636,7 +636,7 @@ void FlexCAN::setFilter (const CAN_filter_t &filter, uint8_t mbox)
     if ( mbox < getNumRxBoxes() ) {
         MBFilters[mbox] = filter;
 
-        if (filter.flags.extended) {
+        if (!filter.flags.extended) {
             FLEXCANb_MBn_ID(flexcanBase, mbox) = (filter.id & FLEXCAN_MB_ID_EXT_MASK);
             FLEXCANb_MBn_CS(flexcanBase, mbox) |= FLEXCAN_MB_CS_IDE;
         } else {
