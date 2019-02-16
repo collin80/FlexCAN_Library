@@ -22,6 +22,7 @@
 #define FLEXCANb_IDFLT_TAB(b, n)          (*(vuint32_t*)(b+0xE0+(n*4)))
 #define FLEXCANb_MB_MASK(b, n)            (*(vuint32_t*)(b+0x880+(n*4)))
 #define FLEXCANb_ESR1(b)                  (*(vuint32_t*)(b+0x20))
+#define FLEXCANb_CTRL2(b)                 (*(vuint32_t*)(b+0x34))
 
 #if defined(__MK66FX1M0__)
 # define INCLUDE_FLEXCAN_CAN1
@@ -215,6 +216,9 @@ void FlexCAN::begin (uint32_t baud, const CAN_filter_t &mask, uint8_t txAlt, uin
     FLEXCANb_MCR (flexcanBase) |= FLEXCAN_MCR_SRX_DIS;
 
     setBaudRate(baud);
+
+    // need to modify CTRL2 to allow extended frames, even if global mailbox filter is unused
+    FLEXCANb_CTRL2(flexcanBase) = (BIT16); 
 
     // enable per-mailbox filtering
 
