@@ -218,7 +218,7 @@ void FlexCAN::begin (uint32_t baud, const CAN_filter_t &mask, uint8_t txAlt, uin
     setBaudRate(baud);
 
     // need to modify CTRL2 to allow extended frames, even if global mailbox filter is unused
-    FLEXCANb_CTRL2(flexcanBase) = (BIT16); 
+    FLEXCANb_CTRL2(flexcanBase) |= (BIT16); 
 
     // enable per-mailbox filtering
 
